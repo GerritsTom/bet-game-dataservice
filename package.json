@@ -1,0 +1,19 @@
+{
+  "name": "bet-game-dataservice",
+  "version": "1.0.0",
+  "description": "a Node.js backend with a MongoDB DB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tom Gerrits",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "jsonwebtoken": "^8.1.1",
+    "mongoose": "^5.0.3",
+    "morgan": "^1.9.0"
+  }
+}
