@@ -47,9 +47,6 @@ router.post('/signup', (req, res, next) => {
 
 router.post('/login', (req, res, next) => {
     // Check if user exists
-    console.log('process.env.JWT_KEY');
-    console.log(process.env.JWT_KEY);
-    process.env.JWT_KEY = 'secret';
     User.find({email: req.body.email})
     .exec()
     .then(user => {
