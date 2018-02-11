@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "a Node.js backend with a MongoDB DB",
   "main": "index.js",
+  "config": {
+    "unsafe-perm":true
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
