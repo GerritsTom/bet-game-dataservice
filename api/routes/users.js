@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
@@ -16,8 +16,10 @@ router.post('/signup', (req, res, next) => {
                 message: 'User already exists'
             });
         } else {
-            bcrypt.hash(req.body.password, 10, (err, hash)=> {
+            console.log('in hash....')
+            bcrypt.hash(req.body.password, null, null, (err, hash) => {
                 if (err) {
+                    console.log(err);
                     return res.status(500).json({
                         error: err
                     });

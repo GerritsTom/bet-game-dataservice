@@ -3,25 +3,19 @@
   "version": "1.0.0",
   "description": "a Node.js backend with a MongoDB DB",
   "main": "index.js",
-  "config": {
-    "unsafe-perm":true
-  },
   "scripts": {
-    "preinstall": "npm install -g node-gyp node-pre-gyp",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "author": "Tom Gerrits",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "jsonwebtoken": "^8.1.1",
     "mongoose": "^5.0.3",
     "morgan": "^1.9.0",
-    "node-gyp": "^3.6.2",
-    "node-pre-gyp": "^0.6.39"
+    "bcrypt-nodejs": "latest"
   },
   "engines": {
     "node": "6.9.2",
@@ -31,5 +25,7 @@
     "type": "git",
     "url": "https://github.com/GerritsTom/bet-game-dataservice.git"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "bcrypt-nodejs": "0.0.3"
+  }
 }
