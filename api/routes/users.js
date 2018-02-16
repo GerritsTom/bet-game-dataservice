@@ -3,6 +3,9 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jsonwebtoken');
+const async = require('async');
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 
 const User = require('../models/user');
 
@@ -85,6 +88,83 @@ router.post('/login', (req, res, next) => {
         res.status(500).json({error: err})
     });
 });
+
+
+router.post('/forgot', (req, res, next) => {
+    async.waterfall([
+        function(done) {
+            crypto.randomBytes(20, (err, buf) => {
+                var token = buf.toString('hex');
+                console.log('token');
+                console.log(token);
+                done(err, token);
+            });        
+        },
+        function(token, done) {
+            User.findOne({email: req.body.email}, (err, user) => {
+                if (!user || user.length < 1) {
+                    return res.status(500).json({
+                        error: err
+                    });
+                }
+
+                user.resetPasswordToken = token;
+                user.resetPasswordExpires = Date.now() + 3600000; 
+
+                user.save((err) => {
+                    done(err, token, user);
+                }); 
+            });
+        },
+        function(token, user, done) {
+            var smtpTransport = nodemailer.createTransport({
+                service: 'Gmail',
+                auth: {
+                    user: 'tippspielwm2018@gmail.com',
+                    pass: '19Amsterdam65!'
+                }
+            });
+            var mailOptions = {
+                to: user.email,
+                from: 'tippspielwm2018@gmail.com',
+                subject: 'Passport Reset Tippspiel WM 2018',
+                text: 'dfgdfgdgdfgd'    
+            };
+            smtpTransport.sendMail(mailOptions, (err) => {
+                console.log('mail sent');
+                done(err, 'done')
+            });
+        }
+    ], (err) => {
+        if (err) {
+            return res.status(500).json({
+                error: err
+            });
+        }
+    });    
+});
+
+router.get('/reset/:token', (req, res, next) => {
+    User.findOne({resetPasswordToken: req.params.token});
+    if (!user) {
+
+    }
+});
+
+router.post('/reset/:token', (req, res, next) => {
+    async.waterfall([
+        function(done) {
+            User.findOne({resetPasswordToken: req.params.token});
+        	if (!user) {
+                return;
+            }
+            if (req.body.password === req.body.confirm) {
+                user.set
+            }
+        }
+    ]);
+});
+
 
 
 router.delete("/:userId", (req, res, next) => {
