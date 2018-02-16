@@ -121,7 +121,7 @@ router.post('/forgot', (req, res, next) => {
                 service: 'Gmail',
                 auth: {
                     user: 'tippspielwm2018@gmail.com',
-                    pass: 'xxxxx'
+                    pass: '19Amsterdam65!'
                 }
             });
             var mailOptions = {
