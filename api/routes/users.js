@@ -92,7 +92,7 @@ router.post('/login', (req, res, next) => {
 
 router.post('/forgot', (req, res, next) => {
     async.waterfall([
-        function(done) {
+        function(done) {  
             crypto.randomBytes(20, (err, buf) => {
                 var token = buf.toString('hex');
                 console.log('token');
@@ -119,19 +119,21 @@ router.post('/forgot', (req, res, next) => {
         function(token, user, done) {
             var smtpTransport = nodemailer.createTransport({
                 service: 'Gmail',
+                secure: false,
                 auth: {
-                    user: 'tippspielwm2018@gmail.com',
-                    pass: '19Amsterdam65!'
+                    user: process.env.USER,
+                    pass: process.env.PASSWORD
                 }
             });
             var mailOptions = {
                 to: user.email,
-                from: 'tippspielwm2018@gmail.com',
+                from: process.env.USER,
                 subject: 'Passport Reset Tippspiel WM 2018',
                 text: 'dfgdfgdgdfgd'    
             };
-            smtpTransport.sendMail(mailOptions, (err) => {
-                console.log('mail sent');
+            console.log('Mail sending....');
+            smtpTransport.sendMail(mailOptions, (err, res) => {
+                if (err) console.log(err);
                 done(err, 'done')
             });
         }
